@@ -71,7 +71,7 @@ export class AppComponent {
       this.serverUrl + '/allPosts/' + this.index
     ).subscribe((data => {
       console.log(data);
-      this.posts = [...data["posts"]];
+      this.posts = this.posts.concat(data["posts"]);
     }))
     this.index++;
   }
