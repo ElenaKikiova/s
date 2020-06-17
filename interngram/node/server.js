@@ -60,6 +60,17 @@ app.post("/savePost", async (req, res) => {
 });
 
 
+app.post("/deletePost", async (req, res) => {
+
+  let id = req.body.id;
+  let deletePost = await Post.deleteOne({ _id: ObjectId(id) });
+  if(deletePost.err) throw deletePost.err;
+  else res.send();
+
+});
+
+
+
 let server = app.listen(port, function(){
   
   let host = server.address().address;

@@ -68,8 +68,27 @@ export class AppComponent {
     this.resetPost();
   }
 
-  async deletePost(post){
-    console.log(post)
+
+  async deletePost(post, modal){
+    console.log(post);
+    this.post = JSON.parse(JSON.stringify(post));
+    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
+
+  }
+
+  async confirmedDelete(post){
+    
+    this.modalService.dismissAll();
+    this.http.post(
+      this.serverUrl + '/deletePost',
+      {id: this.post._id}
+    ).subscribe((data => {
+      
+      let findPost = this.posts.findIndex((p) => p._id == this.post._id);
+      console.log(this.post, findPost);
+      
+      this.posts.splice(findPost, 1);
+    }))
   }
 
   async loadPosts(){
