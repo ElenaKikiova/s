@@ -7,11 +7,15 @@ import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule } from '@angular/forms';
 
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
+    InfiniteScrollModule,
     BrowserModule,
     AppRoutingModule,
     NgbModule,
@@ -22,3 +26,5 @@ import { FormsModule } from '@angular/forms';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+platformBrowserDynamic().bootstrapModule(AppModule);

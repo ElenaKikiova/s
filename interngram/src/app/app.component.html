@@ -67,41 +67,43 @@
     </div>
   </ng-template>
 
+  <div class="content" 
+    infiniteScroll
+    infiniteScrollDistance="2"
+    infiniteScrollThrottle="50"
+    (scrolled)="loadPosts()">
 
-  <div class="card" 
-    *ngFor="let post of posts">
-    
-    <div class="card-body">
-      <h5 class="card-title">{{post.title}}</h5>
 
-      <img [src]="post.meta.url" class="img-fluid"  *ngIf="post.type == 'IMAGE'">
+    <div class="card" 
+      *ngFor="let post of posts">
+      
+      <div class="card-body">
+        <h5 class="card-title">{{post.title}}</h5>
 
-      <a [href]="post.meta.url" target="_blank" *ngIf="post.type == 'VIDEO'">
-        <svg class="bi bi-play-fill" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
-        </svg>
-        Play video
-      </a>
+        <img [src]="post.meta.url" class="img-fluid"  *ngIf="post.type == 'IMAGE'">
 
-      <a [href]="post.meta.url" target="_blank" *ngIf="post.type == 'LINK'">
-        <svg class="bi bi-link" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-          <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
-          <path d="M6.764 6.5H7c.364 0 .706.097 1 .268A1.99 1.99 0 0 1 9 6.5h.236A3.004 3.004 0 0 0 8 5.67a3 3 0 0 0-1.236.83z"/>
-          <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
-          <path d="M8 11.33a3.01 3.01 0 0 0 1.236-.83H9a1.99 1.99 0 0 1-1-.268 1.99 1.99 0 0 1-1 .268h-.236c.332.371.756.66 1.236.83z"/>
-        </svg>
-        Extrenal link
-      </a>
+        <a [href]="post.meta.url" target="_blank" *ngIf="post.type == 'VIDEO'">
+          <svg class="bi bi-play-fill" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M11.596 8.697l-6.363 3.692c-.54.313-1.233-.066-1.233-.697V4.308c0-.63.692-1.01 1.233-.696l6.363 3.692a.802.802 0 0 1 0 1.393z"/>
+          </svg>
+          Play video
+        </a>
+
+        <a [href]="post.meta.url" target="_blank" *ngIf="post.type == 'LINK'">
+          <svg class="bi bi-link" width="3em" height="3em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path d="M6.354 5.5H4a3 3 0 0 0 0 6h3a3 3 0 0 0 2.83-4H9c-.086 0-.17.01-.25.031A2 2 0 0 1 7 10.5H4a2 2 0 1 1 0-4h1.535c.218-.376.495-.714.82-1z"/>
+            <path d="M6.764 6.5H7c.364 0 .706.097 1 .268A1.99 1.99 0 0 1 9 6.5h.236A3.004 3.004 0 0 0 8 5.67a3 3 0 0 0-1.236.83z"/>
+            <path d="M9 5.5a3 3 0 0 0-2.83 4h1.098A2 2 0 0 1 9 6.5h3a2 2 0 1 1 0 4h-1.535a4.02 4.02 0 0 1-.82 1H12a3 3 0 1 0 0-6H9z"/>
+            <path d="M8 11.33a3.01 3.01 0 0 0 1.236-.83H9a1.99 1.99 0 0 1-1-.268 1.99 1.99 0 0 1-1 .268h-.236c.332.371.756.66 1.236.83z"/>
+          </svg>
+          Extrenal link
+        </a>
+
+      </div>
 
     </div>
 
   </div>
-
-  <button 
-    type="button" class="btn btn-primary btn-lg btn-block"
-    (click)="loadPosts()">
-    Load more
-  </button>
 
 </body>
 </html>
