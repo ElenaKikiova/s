@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectID;
 
 
 const port = process.env.PORT || 8080;
@@ -33,7 +34,7 @@ const dbConnection = require('./dbConnection');
 app.get("/allPosts/:index", async (req, res) => {
 
   let index = req.params.index;
-  let posts = await Post.find({}).skip(index * 10).limit(10);
+  let posts = await Post.find({}).skip(index * 10).limit(10).sort("-_id");
   console.log(posts);
   res.send({posts: posts})
 
@@ -41,10 +42,20 @@ app.get("/allPosts/:index", async (req, res) => {
 
 app.post("/savePost", async (req, res) => {
 
-  let post = new Post(req.body.data);
+  let post = req.body.data;
   console.log(post);
-  post.save();
-  res.send();
+  let upsertPost = await Post.updateOne(
+    { _id: ObjectId(post._id) }, 
+    {
+      $set: {
+        type: post.type,
+        title: post.title,
+        meta: post.meta,
+        date: post.date
+      }
+    }, { upsert: true });
+  if(upsertPost.err) throw upsertPost.err;
+  else res.send({ post: post });
 
 });
 

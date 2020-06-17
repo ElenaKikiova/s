@@ -21,14 +21,14 @@ export class AppComponent {
   index = 0;
 
   post = {
-    "type": '',
-    "title": '',
-    "meta": {
-      "url": '',
-      "alt": ''
-    }
+    "_id": null,
+      "type": '',
+      "title": '',
+      "meta": {
+        "url": '',
+        "alt": ''
+      }
   };
-  closeResult;
 
 
   constructor(
@@ -38,52 +38,64 @@ export class AppComponent {
     this.loadPosts();
   }
 
+  async resetPost(){
+    this.post = {
+      "_id": null,
+      "type": '',
+      "title": '',
+      "meta": {
+        "url": '',
+        "alt": ''
+      }
+    }
+  }
 
   async addPost(type, modal) {
+    this.resetPost();
     this.post.type = type;
-    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
+    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
+  }
+
+  async editPost(post, modal) {
+    this.post = JSON.parse(JSON.stringify(post));
+    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
   }
 
   async save(modal){
     this.modalService.dismissAll();
     console.log(this.post);
-
-    this.posts.push(this.post);
-
     this.savePost();
+    this.resetPost();
   }
 
-  async getDismissReason(reason: any) {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
+  async deletePost(post){
+    console.log(post)
   }
 
   async loadPosts(){
     this.http.get(
       this.serverUrl + '/allPosts/' + this.index
     ).subscribe((data => {
-      console.log(data);
       this.posts = this.posts.concat(data["posts"]);
     }))
     this.index++;
   }
 
   async savePost(){
-    console.log("a");
     this.http.post(
       this.serverUrl + '/savePost',
       {data: this.post}
     ).subscribe((data => {
-      console.log(data);
+      
+      let newPost = data["post"];
+      let findPost = this.posts.findIndex((p) => p._id == newPost._id);
+      console.log(newPost, findPost);
+      if(findPost == -1){
+        this.posts.unshift(newPost);
+      }
+      else{
+        this.posts[findPost] = newPost;
+      }
     }))
   }
 
