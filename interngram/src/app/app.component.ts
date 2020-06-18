@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { FormsModule } from '@angular/forms';
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +24,7 @@ export class AppComponent {
     "_id": null,
       "type": '',
       "title": '',
+      "date": null,
       "meta": {
         "url": '',
         "alt": ''
@@ -43,6 +44,7 @@ export class AppComponent {
       "_id": null,
       "type": '',
       "title": '',
+      "date": '',
       "meta": {
         "url": '',
         "alt": ''
@@ -64,6 +66,7 @@ export class AppComponent {
   async save(modal){
     this.modalService.dismissAll();
     console.log(this.post);
+    this.post.date = new Date(this.post.date);
     this.savePost();
     this.resetPost();
   }

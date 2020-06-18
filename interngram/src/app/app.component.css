@@ -1,7 +1,23 @@
-.card{
-    margin: 1rem;
+body{
+    background-color: #dcdcdc;
+    height: auto !important;
 }
 
-a{
-    color: black !important
+.content{
+    padding-top: 60px;
+}
+
+.card a{
+    color: black !important;
+    text-decoration: none !important;
+}
+
+h5{
+    color: grey;
+    font-size: 0.9rem;
+    font-weight: normal;
+}
+
+.dropdown-menu div{
+    cursor: pointer;
 }
