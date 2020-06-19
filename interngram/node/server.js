@@ -3,8 +3,11 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const mongoose = require('mongoose');
+const bcrypt = require('bcryptjs');
+const saltRounds = 10;
 const ObjectId = require('mongodb').ObjectID;
 
+const dbConnection = require('./dbConnection');
 
 const port = process.env.PORT || 8080;
 
@@ -14,6 +17,30 @@ app.set('view engine', 'ejs');
 
 app.use(cors());
 
+//Define a schema
+const UserSchema = mongoose.Schema({
+    Username: String,
+    Password: String,
+    Email: String
+},
+{ collection: "users" }
+);
+
+// Hash password before user is saved to database
+UserSchema.pre('save', function (next) {
+  let user = this;
+
+  bcrypt.hash(user.Password, saltRounds, function (err, hash){
+    if (err) {
+      return next(err);
+    }
+    user.Password = hash;
+    next();
+  })
+  next();
+});
+
+const User = mongoose.model('User', UserSchema);
 
 const PostSchema = mongoose.Schema({
     type: String,
@@ -29,7 +56,26 @@ const PostSchema = mongoose.Schema({
 
 const Post = mongoose.model('Post', PostSchema);
 
-const dbConnection = require('./dbConnection');
+
+// ---------------------------------------------- //
+// -------------------ROUTES--------------------- //
+
+
+app.post('/register', async(req, res) => {
+  let user = req.body.data;
+
+  console.log(user);
+
+  let newUser = new User({
+    Username: user.username,
+    Email: user.email,
+    Password: user.password
+  })
+  newUser.save();
+
+  res.send()
+})
+
 
 app.get("/allPosts/:index", async (req, res) => {
 
