@@ -12,8 +12,6 @@ export class AddEditPostModalComponent implements OnInit {
 
   
   @Input() post: any;
-  
-  // @Output() postSaved = new EventEmitter();
 
   constructor(
     private modalService: NgbModal,
@@ -24,18 +22,5 @@ export class AddEditPostModalComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  async close(){
-    this.activeModal.close(null);
-    // this.postSaved.emit(null);
-  }
-  
-  async save(){
-    this.modalService.dismissAll();
-    console.log(this.post);
-    // this.savePost();
-    // this.resetPost();
-    // this.postSaved.emit(this.post);
-    this.activeModal.close("acl");
-  }
 
 }
