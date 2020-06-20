@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ComponentsModule } from './components/components.module';
 import { AddEditPostModalComponent } from './components/add-edit-post-modal/add-edit-post-modal.component';
+import { DeletePostModalComponent } from './components/delete-post-modal/delete-post-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -69,17 +70,6 @@ export class AppComponent {
     });
   
   }
-
-  private getDismissReason(reason: any): string {
-    if (reason === ModalDismissReasons.ESC) {
-      return 'by pressing ESC';
-    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-      return 'by clicking on a backdrop';
-    } else {
-      return `with: ${reason}`;
-    }
-  }
-
   async editPost(post) {
     this.post = JSON.parse(JSON.stringify(post));
 
@@ -92,23 +82,21 @@ export class AppComponent {
     });
   }
 
-  async save(modal){
-    this.modalService.dismissAll();
-    console.log(this.post);
-    this.post.date = new Date(this.post.date);
-    this.savePost();
-    this.resetPost();
-  }
-
-
-  async deletePost(post, modal){
+  async deletePost(post){
     console.log(post);
     this.post = JSON.parse(JSON.stringify(post));
-    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
+    const modalRef = this.modalService.open(DeletePostModalComponent);
+    modalRef.componentInstance.post = this.post;
+
+    modalRef.result.then((result) => {
+      if(result == true){
+        this.confirmedDelete();
+      }
+    });
 
   }
 
-  async confirmedDelete(post){
+  async confirmedDelete(){
     
     this.modalService.dismissAll();
     this.http.post(

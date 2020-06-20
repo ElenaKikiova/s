@@ -1,0 +1,15 @@
+<div>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            Delete post
+        </h4>
+    </div>
+    <div class="modal-body">
+        Are you sure you want to delete <b>{{post.title}}</b>?
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(false)">Cancel</button>
+        <button type="button" class="btn btn-outline-danger" (click)="activeModal.close(true)">Yes</button>
+    </div>
+</div>

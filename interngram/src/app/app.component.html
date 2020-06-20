@@ -33,25 +33,6 @@
     </div>
   </nav>
 
-
-  <ng-template #deleteModal let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">
-        Delete post
-      </h4>
-      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
-      Are you sure you want to delete <b>{{post.title}}</b>?
-    </div>
-    <div class="modal-footer">
-      <button type="button" class="btn btn-outline-dark" (click)="modal.close('')">Cancel</button>
-      <button type="button" class="btn btn-outline-danger" (click)="confirmedDelete(post)">Yes</button>
-    </div>
-  </ng-template>
-
   <div class="content col-lg-8 col-md-9 col-sm-12 mx-auto" 
     infiniteScroll
     infiniteScrollDistance="2"
@@ -81,7 +62,7 @@
               </svg>
             </button>
             <button 
-              (click)="deletePost(post, deleteModal)"
+              (click)="deletePost(post)"
               type="button" class="btn btn-outline-danger mx-1">
               <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
