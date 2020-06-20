@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { FormsModule } from '@angular/forms';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+
+import { ComponentsModule } from './components/components.module';
+import { AddEditPostModalComponent } from './components/add-edit-post-modal/add-edit-post-modal.component';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +21,8 @@ export class AppComponent {
   posts = [];
 
   index = 0;
+
+  closeResult;
 
   post = {
     "_id": null,
@@ -52,15 +56,40 @@ export class AppComponent {
     }
   }
 
-  async addPost(type, modal) {
+  async addPost(type) {
     this.resetPost();
     this.post.type = type;
-    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
+
+    let modalRef = this.modalService.open(AddEditPostModalComponent, {ariaLabelledBy: 'modal-basic-title'});
+    modalRef.componentInstance.post = this.post;
+    
+    modalRef.result.then((result) => {
+      this.post = result;
+      this.savePost();
+    });
+  
   }
 
-  async editPost(post, modal) {
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  async editPost(post) {
     this.post = JSON.parse(JSON.stringify(post));
-    this.modalService.open(modal, {ariaLabelledBy: 'modal-basic-title'}).result;
+
+    const modalRef = this.modalService.open(AddEditPostModalComponent);
+    modalRef.componentInstance.post = this.post;
+
+    modalRef.result.then((result) => {
+      this.post = result;
+      this.savePost();
+    });
   }
 
   async save(modal){
