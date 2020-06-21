@@ -6,7 +6,9 @@
     display: flex;
     align-items: center;
     flex-direction: column; 
-    justify-content: center;
+    justify-content: center; 
+    background: rgb(37,80,130);
+    background: linear-gradient(0deg, rgba(37,80,130,1) 0%, rgba(155,177,193,1) 22%, rgba(228,228,228,1) 100%);
 }
 
 h3{
@@ -20,10 +22,14 @@ h3{
     border: 0px !important;
 }
 
-.nav-tabs, .nav-link:not(.active){
-    background-color: #dcdcdc;
+.nav-link:not(.active){
+    background-color: rgba(155,177,193,1);
+    color: black !important;
 }
 
+.nav-tabs{
+    background-color: transparent !important;
+}
 .nav-tabs > * {
     border: 0px !important;
 }

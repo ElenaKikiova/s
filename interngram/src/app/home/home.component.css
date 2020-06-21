@@ -1,7 +1,7 @@
 .container-fluid{
     padding-top: 60px;
     background: rgb(37,80,130);
-background: linear-gradient(0deg, rgba(37,80,130,1) 0%, rgba(155,177,193,1) 22%, rgba(228,228,228,1) 100%);
+    background: linear-gradient(0deg, rgba(37,80,130,1) 0%, rgba(155,177,193,1) 22%, rgba(228,228,228,1) 100%);
 }
 
 .card a{
