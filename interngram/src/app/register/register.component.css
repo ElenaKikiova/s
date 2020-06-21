@@ -1,0 +1,29 @@
+
+
+.content{
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column; 
+    justify-content: center;
+}
+
+h3{
+    text-align: center;
+}
+
+.nav-link{
+    text-align: center;
+    font-size: 1.1rem;
+    padding: 1rem;
+    border: 0px !important;
+}
+
+.nav-tabs, .nav-link:not(.active){
+    background-color: #dcdcdc;
+}
+
+.nav-tabs > * {
+    border: 0px !important;
+}
