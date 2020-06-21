@@ -15,8 +15,6 @@ export class RegisterComponent implements OnInit {
   }
 
   constructor(
-    public FormControl: FormControl,
-    public FormGroup: FormGroup,
     private formBuilder: FormBuilder
   ) { }
 
@@ -52,6 +50,10 @@ export class RegisterComponent implements OnInit {
     let pass1 = group.controls.password.value;
     let pass2 = group.controls.repeatPassword.value;
     return (pass1 == pass2) ? null : {'passwordMatch': false};
+  }
+
+  public register(){
+    console.log(this.user);
   }
 
 }
