@@ -5,22 +5,21 @@ const ObjectId = require('mongodb').ObjectID;
 
 // Require bcrypt for hashing passwords
 const bcrypt = require('bcryptjs');
-const saltRounds = 10;
 
 const User = require('../schemas/userSchema');
 
 
 router.post('/checkEmail', async (req, res) => {
-    let email = req.body.email;
+  let email = req.body.email;
+
+  let findEmail = await User.findOne({ Email: email });
+  let result = 0;
+
+  if(findEmail != null){
+    result = 1;
+  }
   
-    let findEmail = await User.findOne({ Email: email });
-    let result = 0;
-  
-    if(findEmail != null){
-      result = 1;
-    }
-    
-    res.send({ matchingEmails: result });
+  res.send({ matchingEmails: result });
 })
 
 
@@ -51,30 +50,31 @@ router.post('/register', async(req, res) => {
 
 router.post("/login", async (req, res) => {
   let userData = req.body.userData;
-  let user = await User.findOne({ Email: userData.email });
-
+  let user = await User.findOne({ Email: userData.Email });
+  console.log(userData, "userd")
   console.log(user);
   
-  console.log(userData.password, user.Password);
 
-  bcrypt.compare(userData.password, user.Password, function (err, result) {
-    if (result === true) {
+  if(user == null){
+    res.send({ error: true });
+  }
+  else{
+    console.log(userData.Password, user.Password);
 
-      res.send({ userData: { 
-        _id: user._id,
-        Username: user.Username, 
-        Status: user.Status, 
-        Email: user.Email,
-        Age: user.Age,
-        Gender: user.Gender
-      } });
-  
-    }
-    else{
-      res.send({ error: "WrongPasswordError"});
-    }
-  });
-  
+    bcrypt.compare(userData.Password, user.Password, function (err, result) {
+      if (result === true) {
+
+        res.send({ userData: { 
+          _id: user._id,
+          Email: user.Email
+        } });
+    
+      }
+      else{
+        res.send({ error: true });
+      }
+    });
+  }
 
 })
 

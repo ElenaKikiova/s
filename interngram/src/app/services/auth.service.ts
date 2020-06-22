@@ -20,9 +20,15 @@ export class AuthService {
   }
   
   public register(data){
-
     return this.http.post(this.connectToServerService.serverUrl + '/register',
       { data } 
     )
   }
+
+  public login(data){
+    return this.http.post(this.connectToServerService.serverUrl + '/login',
+      { userData: data } 
+    )
+  }
+
 }

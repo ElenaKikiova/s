@@ -1,0 +1,47 @@
+<div class="content">
+
+    <div class="card col-lg-4 col-md-6 col-sm-10 m-auto p-0">
+
+      <ul class="nav nav-tabs d-flex">
+        <li class="nav-item w-50">
+          <a class="nav-link" href="register">Register</a>
+        </li>
+        <li class="nav-item w-50">
+          <a class="nav-link active" href="">Login</a>
+        </li>
+      </ul>
+
+      <div class="tab-content p-5">
+          <div class="form-group">
+
+            <label>Email</label>
+            <input 
+              type="email" name="email" [(ngModel)]="user.Email"
+              class="form-control">
+
+            <label>Password</label>
+            <input 
+              type="password" name="password1" [(ngModel)]="user.Password"
+              class="form-control">
+          
+
+            <div 
+              *ngIf="loginError"
+              class="alert alert-danger my-2">
+              Wrong email or password
+            </div>
+
+          </div>
+
+          <button
+            [disabled]="user.Email == '' || user.Password == ''"
+            (click)="login()"
+            class="btn btn-primary btn-block">
+            Login
+          </button>
+
+      </div>
+
+  </div>
+
+</div>

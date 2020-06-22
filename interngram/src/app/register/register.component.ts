@@ -92,12 +92,12 @@ export class RegisterComponent implements OnInit {
 
     this.authService.register(data).subscribe( async (data: [any]) => {
       console.log(data);
+      this.router.navigate(['/home']);
     },
     error => {
       console.log("error");
     });
 
-    this.router.navigate(['/home']);
   }
 
 }
