@@ -42,19 +42,19 @@ app.use(cors());
 
 // const User = mongoose.model('User', UserSchema);
 
-const PostSchema = mongoose.Schema({
-    type: String,
-    title: String,
-    meta: {
-      url: String,
-      alt: String
-    },
-    date: String
-},
-{ collection: "posts"}
-);
+// const PostSchema = mongoose.Schema({
+//     type: String,
+//     title: String,
+//     meta: {
+//       url: String,
+//       alt: String
+//     },
+//     date: String
+// },
+// { collection: "posts"}
+// );
 
-const Post = mongoose.model('Post', PostSchema);
+// const Post = mongoose.model('Post', PostSchema);
 
 
 // ---------------------------------------------- //
@@ -62,60 +62,61 @@ const Post = mongoose.model('Post', PostSchema);
 
 
 app.use(require("./routes/auth"));
+app.use(require("./routes/home"));
 
 
-app.post('/register', async(req, res) => {
-  let user = req.body.data;
+// app.post('/register', async(req, res) => {
+//   let user = req.body.data;
 
-  console.log(user);
+//   console.log(user);
 
-  let newUser = new User({
-    Username: user.username,
-    Email: user.email,
-    Password: user.password
-  })
-  newUser.save();
+//   let newUser = new User({
+//     Username: user.username,
+//     Email: user.email,
+//     Password: user.password
+//   })
+//   newUser.save();
 
-  res.send()
-})
-
-
-app.get("/allPosts/:index", async (req, res) => {
-
-  let index = req.params.index;
-  let posts = await Post.find({}).skip(index * 10).limit(10).sort("-_id");
-  res.send({posts: posts})
-
-});
-
-app.post("/savePost", async (req, res) => {
-
-  let post = req.body.data;
-  console.log(post);
-  let upsertPost = await Post.updateOne(
-    { _id: ObjectId(post._id) }, 
-    {
-      $set: {
-        type: post.type,
-        title: post.title,
-        meta: post.meta,
-        date: post.date
-      }
-    }, { upsert: true });
-  if(upsertPost.err) throw upsertPost.err;
-  else res.send({ post: post });
-
-});
+//   res.send()
+// })
 
 
-app.post("/deletePost", async (req, res) => {
+// app.get("/allPosts/:index", async (req, res) => {
 
-  let id = req.body.id;
-  let deletePost = await Post.deleteOne({ _id: ObjectId(id) });
-  if(deletePost.err) throw deletePost.err;
-  else res.send();
+//   let index = req.params.index;
+//   let posts = await Post.find({}).skip(index * 10).limit(10).sort("-_id");
+//   res.send({posts: posts})
 
-});
+// });
+
+// app.post("/savePost", async (req, res) => {
+
+//   let post = req.body.data;
+//   console.log(post);
+//   let upsertPost = await Post.updateOne(
+//     { _id: ObjectId(post._id) }, 
+//     {
+//       $set: {
+//         type: post.type,
+//         title: post.title,
+//         meta: post.meta,
+//         date: post.date
+//       }
+//     }, { upsert: true });
+//   if(upsertPost.err) throw upsertPost.err;
+//   else res.send({ post: post });
+
+// });
+
+
+// app.post("/deletePost", async (req, res) => {
+
+//   let id = req.body.id;
+//   let deletePost = await Post.deleteOne({ _id: ObjectId(id) });
+//   if(deletePost.err) throw deletePost.err;
+//   else res.send();
+
+// });
 
 
 
