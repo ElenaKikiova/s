@@ -12,11 +12,12 @@
       </ul>
 
       <div class="tab-content p-5">
-          <div class="form-group" [formGroup]="registrationForm">
+
+          <form class="form-group" [formGroup]="registrationForm" (ngSubmit)="register()">
 
             <label>Email</label>
             <input 
-              type="email" name="email" [(ngModel)]="user.Email"
+              type="email" name="email"
               formControlName="email" 
               (change)="checkEmail()"
               class="form-control">
@@ -47,13 +48,13 @@
 
             <label>Password</label>
             <input 
-              type="password" name="password1" [(ngModel)]="user.Password"
+              type="password" name="password1"
               formControlName="password" 
               class="form-control">
           
             <label>Repeat password</label>
             <input 
-              type="password" name="password2" [(ngModel)]="user.RepeatPassword"
+              type="password" name="password2"
               formControlName="repeatPassword" 
               class="form-control">
 
@@ -72,14 +73,16 @@
                 Passwords do not match
               </div>
 
-          </div>
+              
+            <button
+              [disabled]="checkingEmail || usedEmailError || !registrationForm.valid"
+              type="submit"
+              class="btn btn-primary btn-block">
+              Register
+            </button>
 
-          <button
-            [disabled]="checkingEmail || usedEmailError || !email.valid || !password.valid || !repeatPassword.valid || password.value != repeatPassword.value"
-            (click)="register()"
-            class="btn btn-primary btn-block">
-            Register
-          </button>
+          </form>
+
 
       </div>
 

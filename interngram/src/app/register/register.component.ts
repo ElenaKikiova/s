@@ -14,12 +14,6 @@ export class RegisterComponent implements OnInit {
   checkingEmail = false;
   usedEmailError = false;
 
-  user = {
-    Email: "",
-    Password: "",
-    RepeatPassword: ""
-  }
-
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
@@ -82,7 +76,6 @@ export class RegisterComponent implements OnInit {
   
 
   public register(){
-    console.log(this.user);
 
     let data = {
       email: this.registrationForm.value.email,
