@@ -10,6 +10,20 @@ const saltRounds = 10;
 const User = require('../schemas/userSchema');
 
 
+router.post('/checkEmail', async (req, res) => {
+    let email = req.body.email;
+  
+    let findEmail = await User.findOne({ Email: email });
+    let result = 0;
+  
+    if(findEmail != null){
+      result = 1;
+    }
+    
+    res.send({ matchingEmails: result });
+})
+
+
 router.post('/register', async(req, res) => {
   let email = req.body.data.email;
   let password = req.body.data.password;

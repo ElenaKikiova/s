@@ -18,7 +18,19 @@
             <input 
               type="email" name="email" [(ngModel)]="user.Email"
               formControlName="email" 
+              (change)="checkEmail()"
               class="form-control">
+
+            <div *ngIf="checkingEmail" class="alert alert-primary my-2">
+              Checking email...
+            </div>
+
+            <div *ngIf="usedEmailError"
+              class="alert alert-danger my-2">
+
+               This email is already registered
+
+            </div>
 
             <div *ngIf="email.invalid && (email.dirty || email.touched)"
               class="alert alert-danger my-2">
@@ -45,7 +57,7 @@
               formControlName="repeatPassword" 
               class="form-control">
 
-            <div *ngIf="password.invalid && (password.dirty || password.touched)"
+            <div *ngIf="password.invalid && (password.value != '' || repeatPassword.value != '')"
               class="alert alert-danger my-2">
 
               <div *ngIf="password.errors.minlength || password.errors.maxlength">
@@ -55,7 +67,7 @@
             </div>
 
             <div 
-                *ngIf="password.value != repeatPassword.value && (repeatPassword.dirty || repeatPassword.touched)"
+                *ngIf="password.value != repeatPassword.value && (password.value != '' || repeatPassword.value != '')"
                 class="alert alert-danger my-2">
                 Passwords do not match
               </div>
@@ -63,7 +75,7 @@
           </div>
 
           <button
-            [disabled]="!email.valid || !password.valid || !repeatPassword.valid || password.value != repeatPassword.value"
+            [disabled]="checkingEmail || usedEmailError || !email.valid || !password.valid || !repeatPassword.valid || password.value != repeatPassword.value"
             (click)="register()"
             class="btn btn-primary btn-block">
             Register

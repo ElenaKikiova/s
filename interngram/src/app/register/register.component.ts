@@ -11,6 +11,9 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
 
+  checkingEmail = false;
+  usedEmailError = false;
+
   user = {
     Email: "",
     Password: "",
@@ -24,6 +27,8 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {}
+
+  
 
   public email = new FormControl('', Validators.compose([
     Validators.required,
@@ -50,11 +55,31 @@ export class RegisterComponent implements OnInit {
   });
 
   
+  async checkEmail(){
+    if(this.checkingEmail == false){
+      this.checkingEmail = true;
+      this.usedEmailError = false;
+
+      setTimeout(() => {
+        this.authService.checkEmail(this.email.value).subscribe( async (data: [any]) => {
+          console.log(data);
+
+          if(data["matchingEmails"] == 1) this.usedEmailError = true;
+          else this.usedEmailError = false;
+          
+          this.checkingEmail = false;
+        })
+      }, 2000);
+    }
+  }
+  
   public checkPasswordsMatch(group: FormGroup) {
     let pass1 = group.controls.password.value;
     let pass2 = group.controls.repeatPassword.value;
     return (pass1 == pass2) ? null : {'passwordMatch': false};
   }
+
+  
 
   public register(){
     console.log(this.user);
