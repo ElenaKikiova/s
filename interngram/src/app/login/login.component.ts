@@ -38,6 +38,8 @@ export class LoginComponent implements OnInit {
       }
       else{
         this.router.navigate(['/home']);
+        localStorage.setItem('userId', data["userData"]._id); 
+        localStorage.setItem('userEmail', data["userData"].Email); 
       }
     },
     error => {

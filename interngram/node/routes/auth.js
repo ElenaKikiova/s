@@ -41,12 +41,6 @@ router.post('/register', async(req, res) => {
   res.send()
 })
 
-// router.get("/logout", async (req, res) => {
-//   console.log("a");
-//   res.clearCookie("DotsUserId");
-//   res.clearCookie("DotsUsername");
-//   res.redirect('/login');
-// })
 
 router.post("/login", async (req, res) => {
   let userData = req.body.userData;

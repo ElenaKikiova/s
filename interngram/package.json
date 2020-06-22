@@ -28,6 +28,7 @@
     "express": "^4.17.1",
     "mongoose": "^5.9.19",
     "ngx-infinite-scroll": "^9.0.0",
+    "ngx-webstorage-service": "^4.1.0",
     "nodemon": "^2.0.4",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",

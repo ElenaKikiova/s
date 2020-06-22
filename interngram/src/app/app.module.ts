@@ -15,6 +15,7 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { StorageServiceModule } from 'ngx-webstorage-service';
 
 import { ConnectToServerService } from './services/connect-to-server.service';
 import { AuthService } from './services/auth.service';
@@ -35,7 +36,8 @@ import { AuthService } from './services/auth.service';
     NgbModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    StorageServiceModule
   ],
   providers: [
     ConnectToServerService,

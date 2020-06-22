@@ -22,7 +22,8 @@
       </ul>
     </div>
 
-    <a routerLink="/register">Register</a>
+    <div class="text-light mx-2"> {{user.Email}} </div>
+    <div class="text-light mx-2" style="cursor: pointer;" (click)="logOut()">Log Out</div>
 </nav>
 
 

@@ -8,6 +8,8 @@ import { ComponentsModule } from '../components/components.module';
 import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add-edit-post-modal.component';
 import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
 
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -15,8 +17,19 @@ import { DeletePostModalComponent } from '../components/delete-post-modal/delete
 })
 export class HomeComponent implements OnInit {
 
+  public user;
 
   ngOnInit(): void {
+
+    if(localStorage.getItem("userId") == null){
+      this.router.navigate(['/login']);
+    }
+
+    this.user = {
+      _id: localStorage.getItem("userId"),
+      Email: localStorage.getItem("userEmail")
+    }
+    console.log(this.user);
   }
 
   serverUrl = "http://localhost:8080";
@@ -41,7 +54,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public http: HttpClient
+    public http: HttpClient,
+    public router: Router
   ){
     this.loadPosts();
   }
@@ -140,6 +154,11 @@ export class HomeComponent implements OnInit {
         this.posts[findPost] = newPost;
       }
     }))
+  }
+
+  async logOut(){
+    localStorage.clear();
+    this.router.navigate(['/login']);
   }
 
 }
