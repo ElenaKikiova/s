@@ -11,13 +11,15 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
+import { RegisterComponent } from './register/register.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    RegisterComponent
   ],
   imports: [
     InfiniteScrollModule,
