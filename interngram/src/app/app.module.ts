@@ -15,6 +15,9 @@ import { RegisterComponent } from './register/register.component';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
+import { ConnectToServerService } from './services/connect-to-server.service';
+import { AuthService } from './services/auth.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +35,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [
+    ConnectToServerService,
+    AuthService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
