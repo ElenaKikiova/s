@@ -31,7 +31,12 @@ router.post("/savePost", async (req, res) => {
   }, { upsert: true });
 
   if(upsertPost.err) throw upsertPost.err;
-  else res.send({ post: post });
+  else {
+    if(upsertPost.upserted != undefined){
+      post._id = upsertPost.upserted[0]._id;
+    }
+    res.send({ post });
+  }
 
 });
 

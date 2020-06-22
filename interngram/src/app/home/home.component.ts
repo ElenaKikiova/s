@@ -29,13 +29,13 @@ export class HomeComponent implements OnInit {
 
   post = {
     "_id": null,
-      "type": '',
-      "title": '',
-      "date": null,
-      "meta": {
-        "url": '',
-        "alt": ''
-      }
+    "type": '',
+    "title": '',
+    "date": null,
+    "meta": {
+      "url": '',
+      "alt": ''
+    }
   };
 
 
@@ -74,7 +74,7 @@ export class HomeComponent implements OnInit {
   }
   async editPost(post) {
     this.post = JSON.parse(JSON.stringify(post));
-
+    console.log(this.post);
     const modalRef = this.modalService.open(AddEditPostModalComponent);
     modalRef.componentInstance.post = this.post;
 
@@ -91,6 +91,7 @@ export class HomeComponent implements OnInit {
     modalRef.componentInstance.post = this.post;
 
     modalRef.result.then((result) => {
+      console.log(result);
       if(result == true){
         this.confirmedDelete();
       }
@@ -129,6 +130,7 @@ export class HomeComponent implements OnInit {
     ).subscribe((data => {
       
       let newPost = data["post"];
+      console.log(newPost);
       let findPost = this.posts.findIndex((p) => p._id == newPost._id);
       console.log(newPost, findPost);
       if(findPost == -1){
