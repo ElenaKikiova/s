@@ -42,7 +42,7 @@ export class HomeComponent implements OnInit {
 
     this.post = {
       "_id": null,
-      "userId": this.user._id,
+      "userId": this.user,
       "type": '',
       "title": '',
       "date": null,
@@ -62,10 +62,10 @@ export class HomeComponent implements OnInit {
     this.loadPosts();
   }
 
-  async resetPost(){
+  public resetPost(){
     this.post = {
       "_id": null,
-      "userId": this.user._id,
+      "userId": this.user,
       "type": '',
       "title": '',
       "date": '',
@@ -75,6 +75,7 @@ export class HomeComponent implements OnInit {
       }
     }
   }
+
 
   async addPost(type) {
     this.resetPost();
@@ -141,12 +142,17 @@ export class HomeComponent implements OnInit {
   }
 
   async savePost(){
+    let userData = this.post.userId;
+    this.post.userId = userData._id;
+    
     this.http.post(
       this.connectToServerService.serverUrl + '/savePost',
       {data: this.post}
     ).subscribe((data => {
       
       let newPost = data["post"];
+      
+      newPost.userId = userData;
       console.log(newPost);
       let findPost = this.posts.findIndex((p) => p._id == newPost._id);
       console.log(newPost, findPost);

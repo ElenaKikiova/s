@@ -40,13 +40,14 @@
 
           <div class="d-flex mb-2">
             <div>
-              <h5 class="card-title">{{ post.userId == null ? 'Anonymous' : post.userId.Email}}</h5>
+              <h5 class="card-title">{{post.userId.Email}}</h5>
               <h3 class="card-title">{{post.title}}</h3>
               <h5>{{post.date | date: 'dd.MM.yyyy'}} </h5>
             </div>
 
             <div class="ml-auto">
               <button 
+                *ngIf="user._id == post.userId._id"
                 (click)="editPost(post)"
                 type="button" class="btn btn-outline-primary mx-1">
                 <svg class="bi bi-pencil" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -55,6 +56,7 @@
                 </svg>
               </button>
               <button 
+                *ngIf="user._id == post.userId._id"
                 (click)="deletePost(post)"
                 type="button" class="btn btn-outline-danger mx-1">
                 <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">

@@ -13,7 +13,7 @@ router.get("/allPosts/:index", async (req, res) => {
   let posts = await Post.find({})
     .skip(index * 10)
     .limit(10)
-    .populate("userId")
+    .populate("userId", "-Password")
     .sort("-_id");
   res.send({posts: posts})
   
