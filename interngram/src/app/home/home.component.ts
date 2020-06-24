@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';  
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
@@ -9,7 +8,7 @@ import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add
 import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
 
 import { Router } from '@angular/router';
-import { ConnectToServerService } from '../services/connect-to-server.service';
+import { PostService } from '../services/post.service';
 
 @Component({
   selector: 'app-home',
@@ -55,9 +54,8 @@ export class HomeComponent implements OnInit {
 
   constructor(
     private modalService: NgbModal,
-    public http: HttpClient,
     public router: Router,
-    private connectToServerService: ConnectToServerService
+    private postService: PostService
   ){
     this.loadPosts();
   }
@@ -124,22 +122,17 @@ export class HomeComponent implements OnInit {
   async confirmedDelete(){
     
     this.modalService.dismissAll();
-    this.http.post(
-      this.connectToServerService.serverUrl + '/deletePost',
-      {id: this.post._id}
-    ).subscribe((data => {
+    this.postService.deletePost(this.post._id).subscribe((data) => {
       
       let findPost = this.posts.findIndex((p) => p._id == this.post._id);
       console.log(this.post, findPost);
       
       this.posts.splice(findPost, 1);
-    }))
+    });
   }
 
   async loadPosts(){
-    this.http.get(
-      this.connectToServerService.serverUrl + '/allPosts/' + this.index
-    ).subscribe((data => {
+    this.postService.loadPosts(this.index).subscribe((data => {
       this.posts = this.posts.concat(data["posts"]);
     }))
     this.index++;
@@ -149,14 +142,10 @@ export class HomeComponent implements OnInit {
     
     let userData = this.post.userId;
     this.post.userId = userData._id;
-    
-    this.http.post(
-      this.connectToServerService.serverUrl + '/savePost',
-      {data: this.post}
-    ).subscribe((data => {
-      
+
+    this.postService.savePost(this.post).subscribe((data) => {
       let newPost = data["post"];
-      
+    
       newPost.userId = userData;
       console.log(newPost);
       let findPost = this.posts.findIndex((p) => p._id == newPost._id);
@@ -167,7 +156,8 @@ export class HomeComponent implements OnInit {
       else{
         this.posts[findPost] = newPost;
       }
-    }))
+    })
+    
   }
 
   async logOut(){
