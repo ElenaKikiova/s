@@ -20,6 +20,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { ConnectToServerService } from './services/connect-to-server.service';
 import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
+import { ComponentsModule } from './components/components.module';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { PostService } from './services/post.service';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    StorageServiceModule
+    StorageServiceModule,
+    ComponentsModule
   ],
   providers: [
     ConnectToServerService,

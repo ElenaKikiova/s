@@ -13,7 +13,11 @@ export class PostService {
   ) { }
 
   public loadPosts(index){
-    return this.http.get(this.connectToServerService.serverUrl + '/allPosts/' + index)
+    return this.http.get(this.connectToServerService.serverUrl + '/posts/' + index)
+  }
+
+  public loadComments(postId){
+    return this.http.get(this.connectToServerService.serverUrl + '/comments/' + postId)
   }
   
   public savePost(data){

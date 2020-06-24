@@ -4,11 +4,12 @@ import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { ComponentsModule } from '../components/components.module';
-import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add-edit-post-modal.component';
-import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
 
 import { Router } from '@angular/router';
 import { PostService } from '../services/post.service';
+import { CommentsModalComponent } from '../components/comments-modal/comments-modal.component';
+import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add-edit-post-modal.component';
+import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
 
 @Component({
   selector: 'app-home',
@@ -121,7 +122,6 @@ export class HomeComponent implements OnInit {
 
   async confirmedDelete(){
     
-    this.modalService.dismissAll();
     this.postService.deletePost(this.post._id).subscribe((data) => {
       
       let findPost = this.posts.findIndex((p) => p._id == this.post._id);
@@ -158,6 +158,21 @@ export class HomeComponent implements OnInit {
       }
     })
     
+  }
+
+  async showComments(post){
+
+    this.postService.loadComments(post._id).subscribe((data => {
+      console.log(data);
+
+      const modalRef = this.modalService.open(CommentsModalComponent);
+      modalRef.componentInstance.comments = data["comments"];
+
+      modalRef.result.then((result) => {
+        console.log(result);
+      });
+    }))
+
   }
 
   async logOut(){

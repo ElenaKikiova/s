@@ -1,0 +1,88 @@
+<div>
+
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">
+            Comments
+        </h4>
+    </div>
+    <div class="modal-body">
+
+        <div class="alert" *ngFor="let comment of comments">
+            <h5>{{comment.userId.Email}}</h5>
+            <div>{{comment.comment}}</div>
+        </div>
+
+        <!-- <form class="form-group" [formGroup]="addEditPostForm">
+
+            <label>Type</label>
+            <select name="type" class="form-control" formControlName="type">
+                <option value="IMAGE">Image</option>
+                <option value="VIDEO">Video</option>
+                <option value="LINK">Link</option>
+            </select>       
+       
+            <label>Title</label>
+            <input name="title" formControlName="title" class="form-control">
+
+            <div *ngIf="title.invalid && (title.dirty || title.touched)"
+              class="alert alert-danger my-2">
+                <div *ngIf="title.errors.required">
+                  Enter title
+                </div>
+                <div *ngIf="title.errors.minlength || title.errors.maxlength">
+                    Title should be 1-15 symbols
+                </div>
+            </div>
+       
+            <label>Date</label>
+            <div class="input-group">
+            <input 
+                formControlName="date" type="date" class="form-control" 
+                value="{{post.date | date: 'yyyy-MM-dd'}}">
+            </div>
+       
+            <label>URL</label>
+            <input name="url" formControlName="url" class="form-control">
+
+            <div *ngIf="url.invalid && (url.dirty || url.touched)"
+              class="alert alert-danger my-2">
+              <div *ngIf="url.errors.required">
+                Enter URL
+              </div>
+              <div *ngIf="url.errors.minlength || url.errors.maxlength">
+                  URL should be 1-50 symbols
+              </div>
+            </div>
+
+            <label>Alt text</label>
+            <input name="alt" formControlName="alt" class="form-control" name="alt" >
+        
+        </form> -->
+    </div>
+    <div class="modal-footer">
+
+        <div class="d-flex justify-content-center" style="width: 100%">
+
+            <textarea class="flex-grow-1"
+                [(ngModel)]="newComment.comment" placeholder="Your comment">
+
+            </textarea>
+
+            <button 
+                [disabled]="newComment.comment.length == 0"
+                type="button" 
+                class="btn btn-outline-primary" 
+                (click)="submitComment()">
+            Comment</button>
+
+        </div>
+
+        <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(null)">Cancel</button>
+        <button 
+            [disabled]="!addEditPostForm.valid"
+            type="button" 
+            class="btn btn-outline-primary" 
+            (click)="submit()">
+        Save</button> -->
+    </div>
+</div>

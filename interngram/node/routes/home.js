@@ -5,9 +5,10 @@ const ObjectId = require('mongodb').ObjectID;
 
 
 const Post = require('../schemas/postSchema');
+const Comment = require('../schemas/commentSchema');
 
 
-router.get("/allPosts/:index", async (req, res) => {
+router.get("/posts/:index", async (req, res) => {
 
   let index = req.params.index;
   let posts = await Post.find({})
@@ -15,7 +16,27 @@ router.get("/allPosts/:index", async (req, res) => {
     .limit(10)
     .populate("userId", "-Password")
     .sort("-_id");
-  res.send({posts: posts})
+
+  if(posts.err) throw posts.err;
+  else {
+    res.send({posts: posts})
+  }
+  
+});
+
+
+router.get("/comments/:postId", async (req, res) => {
+
+  let postId = req.params.postId;
+  let comments = await Comment
+    .find({ postId: ObjectId(postId)})
+    .populate("userId", "-Password")
+    .sort("-_id");
+
+  if(comments.err) throw comments.err;
+  else {
+    res.send({comments: comments})
+  }
   
 });
   
