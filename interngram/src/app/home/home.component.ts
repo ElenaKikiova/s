@@ -9,6 +9,7 @@ import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add
 import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
 
 import { Router } from '@angular/router';
+import { ConnectToServerService } from '../services/connect-to-server.service';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,14 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit {
 
   public user;
+
+  public post;
+
+  posts = [];
+
+  collapsed = false;
+
+  index = 0;
 
   ngOnInit(): void {
 
@@ -30,32 +39,25 @@ export class HomeComponent implements OnInit {
       Email: localStorage.getItem("userEmail")
     }
     console.log(this.user);
+
+    this.post = {
+      "_id": null,
+      "userId": this.user._id,
+      "type": '',
+      "title": '',
+      "date": null,
+      "meta": {
+        "url": '',
+        "alt": ''
+      }
+    };
   }
-
-  serverUrl = "http://localhost:8080";
-
-  posts = [];
-
-  collapsed = false;
-
-  index = 0;
-
-  post = {
-    "_id": null,
-    "type": '',
-    "title": '',
-    "date": null,
-    "meta": {
-      "url": '',
-      "alt": ''
-    }
-  };
-
 
   constructor(
     private modalService: NgbModal,
     public http: HttpClient,
-    public router: Router
+    public router: Router,
+    private connectToServerService: ConnectToServerService
   ){
     this.loadPosts();
   }
@@ -63,6 +65,7 @@ export class HomeComponent implements OnInit {
   async resetPost(){
     this.post = {
       "_id": null,
+      "userId": this.user._id,
       "type": '',
       "title": '',
       "date": '',
@@ -117,7 +120,7 @@ export class HomeComponent implements OnInit {
     
     this.modalService.dismissAll();
     this.http.post(
-      this.serverUrl + '/deletePost',
+      this.connectToServerService.serverUrl + '/deletePost',
       {id: this.post._id}
     ).subscribe((data => {
       
@@ -130,7 +133,7 @@ export class HomeComponent implements OnInit {
 
   async loadPosts(){
     this.http.get(
-      this.serverUrl + '/allPosts/' + this.index
+      this.connectToServerService.serverUrl + '/allPosts/' + this.index
     ).subscribe((data => {
       this.posts = this.posts.concat(data["posts"]);
     }))
@@ -139,7 +142,7 @@ export class HomeComponent implements OnInit {
 
   async savePost(){
     this.http.post(
-      this.serverUrl + '/savePost',
+      this.connectToServerService.serverUrl + '/savePost',
       {data: this.post}
     ).subscribe((data => {
       

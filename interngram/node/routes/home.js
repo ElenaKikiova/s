@@ -10,7 +10,11 @@ const Post = require('../schemas/postSchema');
 router.get("/allPosts/:index", async (req, res) => {
 
   let index = req.params.index;
-  let posts = await Post.find({}).skip(index * 10).limit(10).sort("-_id");
+  let posts = await Post.find({})
+    .skip(index * 10)
+    .limit(10)
+    .populate("userId")
+    .sort("-_id");
   res.send({posts: posts})
   
 });
@@ -23,6 +27,7 @@ router.post("/savePost", async (req, res) => {
     { _id: ObjectId(post._id) }, 
     {
     $set: {
+      userId: ObjectId(post.userId),
       type: post.type,
       title: post.title,
       meta: post.meta,

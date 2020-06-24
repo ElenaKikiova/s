@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 
 const PostSchema = mongoose.Schema({
+  userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User'},
   type: String,
   title: String,
   meta: {

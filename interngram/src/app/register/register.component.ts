@@ -73,7 +73,6 @@ export class RegisterComponent implements OnInit {
     return (pass1 == pass2) ? null : {'passwordMatch': false};
   }
 
-  
 
   public register(){
 
