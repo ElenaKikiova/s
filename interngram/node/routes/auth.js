@@ -44,7 +44,7 @@ router.post('/register', async(req, res) => {
 
 router.post("/login", async (req, res) => {
   let userData = req.body.userData;
-  let user = await User.findOne({ Email: userData.Email });
+  let user = await User.findOne({ Email: userData.email });
   console.log(userData, "userd")
   console.log(user);
   
@@ -53,9 +53,9 @@ router.post("/login", async (req, res) => {
     res.send({ error: true });
   }
   else{
-    console.log(userData.Password, user.Password);
+    console.log(userData.password, user.Password);
 
-    bcrypt.compare(userData.Password, user.Password, function (err, result) {
+    bcrypt.compare(userData.password, user.Password, function (err, result) {
       if (result === true) {
 
         res.send({ userData: { 
