@@ -39,6 +39,19 @@ router.get("/comments/:postId", async (req, res) => {
   }
   
 });
+
+
+router.post("/addComment", async (req, res) => {
+
+  let comment = req.body.data;
+  console.log(comment);
+  let addComment = new Comment(comment);
+
+  addComment.save();
+
+  res.send();
+
+});
   
 router.post("/savePost", async (req, res) => {
 

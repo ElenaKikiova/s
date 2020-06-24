@@ -7,6 +7,10 @@
     </div>
     <div class="modal-body">
 
+        <div class="alert alert-warning" *ngIf="comments.length == 0">
+            No comments yet
+        </div>
+
         <div class="alert" *ngFor="let comment of comments">
             <h5>{{comment.userId.Email}}</h5>
             <div>{{comment.comment}}</div>

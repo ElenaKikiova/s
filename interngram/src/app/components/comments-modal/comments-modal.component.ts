@@ -1,8 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { Validators, FormControl, ValidationErrors, FormGroupDirective, FormBuilder, FormGroup } from '@angular/forms';
+import { PostService } from '../../services/post.service';
 
 @Component({
   selector: 'comments-modal',
@@ -11,19 +9,21 @@ import { Validators, FormControl, ValidationErrors, FormGroupDirective, FormBuil
 })
 export class CommentsModalComponent implements OnInit {
 
-  
+  @Input() postId: any;
+  @Input() user: any;
   @Input() comments: any;
 
   newComment = {
-    userId: null,
+    userId: {
+      _id: null,
+      Email: null
+    },
     postId: null,
     comment: ""
   }
 
   constructor(
-    // private formBuilder: FormBuilder,
-    // private modalService: NgbModal,
-    // public activeModal: NgbActiveModal
+    private postService: PostService
   ) { }
 
   // public type;
@@ -35,35 +35,14 @@ export class CommentsModalComponent implements OnInit {
   // public commentsForm;
 
   ngOnInit(): void {
-  //   console.log(this.post.type);
 
-  //   this.type = new FormControl(this.post.type);
+    this.newComment.postId = this.postId;
+    this.newComment.userId = {
+      _id: this.user._id,
+      Email: this.user.Email
+    }
 
-  //   this.title = new FormControl(this.post.title, Validators.compose([
-  //     Validators.required,
-  //     Validators.minLength(1),
-  //     Validators.maxLength(15)
-  //   ]));
-
-  //   this.date = new FormControl(this.post.date);
-
-  //   this.url = new FormControl(this.post.meta.url, Validators.compose([
-  //     Validators.required,
-  //     Validators.minLength(1),
-  //     Validators.maxLength(50)
-  //   ]));
-
-  //   this.alt = new FormControl(this.post.meta.alt, Validators.maxLength(50));
-
-  //   this.commentsForm = this.formBuilder.group({
-  //     type: this.type,
-  //     title: this.title,
-  //     date: this.date,
-  //     url: this.url,
-  //     alt: this.alt
-  //   });
   }
-  
 
   // public submit(){
   //   let data = {
@@ -103,6 +82,17 @@ export class CommentsModalComponent implements OnInit {
 
   async submitComment(){
     console.log(this.newComment);
+
+    this.comments.unshift(JSON.parse(JSON.stringify(this.newComment)));
+
+    let commentForDb = JSON.parse(JSON.stringify(this.newComment));
+    commentForDb.userId = this.newComment.userId._id;
+
+    this.postService.addComment(commentForDb).subscribe((data) => {
+      console.log(data);
+      this.newComment.comment = "";
+    })
+    
   }
 
 }

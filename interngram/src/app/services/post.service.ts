@@ -19,6 +19,12 @@ export class PostService {
   public loadComments(postId){
     return this.http.get(this.connectToServerService.serverUrl + '/comments/' + postId)
   }
+
+  public addComment(data){
+    return this.http.post(this.connectToServerService.serverUrl + '/addComment',
+      { data } 
+    )
+  }
   
   public savePost(data){
     return this.http.post(this.connectToServerService.serverUrl + '/savePost',
