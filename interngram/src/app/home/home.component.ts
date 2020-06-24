@@ -85,8 +85,10 @@ export class HomeComponent implements OnInit {
     modalRef.componentInstance.post = this.post;
     
     modalRef.result.then((result) => {
-      this.post = result;
-      this.savePost();
+      if(result != null){
+        this.post = result;
+        this.savePost();
+      }
     });
   
   }
@@ -97,8 +99,10 @@ export class HomeComponent implements OnInit {
     modalRef.componentInstance.post = this.post;
 
     modalRef.result.then((result) => {
-      this.post = result;
-      this.savePost();
+      if(result != null){
+        this.post = result;
+        this.savePost();
+      }
     });
   }
 
@@ -142,6 +146,7 @@ export class HomeComponent implements OnInit {
   }
 
   async savePost(){
+    
     let userData = this.post.userId;
     this.post.userId = userData._id;
     

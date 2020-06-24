@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
-import { FormsModule } from '@angular/forms';
+
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AddEditPostModalComponent } from './add-edit-post-modal/add-edit-post-modal.component';
 
@@ -14,7 +15,8 @@ import { AddEditPostModalComponent } from './add-edit-post-modal/add-edit-post-m
     CommonModule,
     RouterModule,
     NgbModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   exports: [
     AddEditPostModalComponent
