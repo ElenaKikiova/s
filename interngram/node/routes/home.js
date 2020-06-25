@@ -52,6 +52,16 @@ router.post("/addComment", async (req, res) => {
   res.send();
 
 });
+
+router.post("/deleteComment", async (req, res) => {
+  // let comment = req.body.data;
+  // console.log(comment);
+  // let addComment = new Comment(comment);
+
+  // addComment.save();
+
+  res.send();
+})
   
 router.post("/savePost", async (req, res) => {
 

@@ -25,6 +25,12 @@ export class PostService {
       { data } 
     )
   }
+
+  public deleteComment(data){
+    return this.http.post(this.connectToServerService.serverUrl + '/deleteComment',
+      { data } 
+    )
+  }
   
   public savePost(data){
     return this.http.post(this.connectToServerService.serverUrl + '/savePost',
