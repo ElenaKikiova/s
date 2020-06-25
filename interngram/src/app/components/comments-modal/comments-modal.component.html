@@ -12,56 +12,23 @@
         </div>
 
         <div class="alert" *ngFor="let comment of comments">
-            <h5>{{comment.userId.Email}}</h5>
+            <div class="d-flex">
+                <h5>{{comment.userId.Email}}</h5>
+
+                <div class="ml-auto">
+                    <button 
+                      *ngIf="user._id == post.userId._id"
+                      (click)="deleteComment(comment)"
+                      type="button" class="btn btn-outline-danger mx-1">
+                      <svg class="bi bi-trash-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5a.5.5 0 0 0-1 0v7a.5.5 0 0 0 1 0v-7z"/>
+                      </svg>
+                    </button>
+                  </div>
+            </div>
             <div>{{comment.comment}}</div>
         </div>
 
-        <!-- <form class="form-group" [formGroup]="addEditPostForm">
-
-            <label>Type</label>
-            <select name="type" class="form-control" formControlName="type">
-                <option value="IMAGE">Image</option>
-                <option value="VIDEO">Video</option>
-                <option value="LINK">Link</option>
-            </select>       
-       
-            <label>Title</label>
-            <input name="title" formControlName="title" class="form-control">
-
-            <div *ngIf="title.invalid && (title.dirty || title.touched)"
-              class="alert alert-danger my-2">
-                <div *ngIf="title.errors.required">
-                  Enter title
-                </div>
-                <div *ngIf="title.errors.minlength || title.errors.maxlength">
-                    Title should be 1-15 symbols
-                </div>
-            </div>
-       
-            <label>Date</label>
-            <div class="input-group">
-            <input 
-                formControlName="date" type="date" class="form-control" 
-                value="{{post.date | date: 'yyyy-MM-dd'}}">
-            </div>
-       
-            <label>URL</label>
-            <input name="url" formControlName="url" class="form-control">
-
-            <div *ngIf="url.invalid && (url.dirty || url.touched)"
-              class="alert alert-danger my-2">
-              <div *ngIf="url.errors.required">
-                Enter URL
-              </div>
-              <div *ngIf="url.errors.minlength || url.errors.maxlength">
-                  URL should be 1-50 symbols
-              </div>
-            </div>
-
-            <label>Alt text</label>
-            <input name="alt" formControlName="alt" class="form-control" name="alt" >
-        
-        </form> -->
     </div>
     <div class="modal-footer">
 
@@ -81,12 +48,5 @@
 
         </div>
 
-        <!-- <button type="button" class="btn btn-outline-dark" (click)="activeModal.close(null)">Cancel</button>
-        <button 
-            [disabled]="!addEditPostForm.valid"
-            type="button" 
-            class="btn btn-outline-primary" 
-            (click)="submit()">
-        Save</button> -->
     </div>
 </div>

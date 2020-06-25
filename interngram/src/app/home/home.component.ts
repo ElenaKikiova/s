@@ -166,7 +166,7 @@ export class HomeComponent implements OnInit {
       console.log(data);
 
       const modalRef = this.modalService.open(CommentsModalComponent);
-      modalRef.componentInstance.postId = post._id;
+      modalRef.componentInstance.post = post;
       modalRef.componentInstance.user = this.user,
       modalRef.componentInstance.comments = data["comments"];
 
