@@ -12,8 +12,8 @@ export class BookmarkService {
     private connectToServerService: ConnectToServerService
   ) { }
 
-  public loadBookmarks(userId){
-    return this.http.get(this.connectToServerService.serverUrl + '/bookmarks/' + userId)
+  public loadBookmarks(userId, loadDetails){
+    return this.http.get(this.connectToServerService.serverUrl + '/bookmarks/' + userId + '/' + loadDetails)
   }
  
   public updateBookmarks(user){

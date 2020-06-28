@@ -120,12 +120,23 @@ router.post("/updateLikes", async (req, res) => {
 
 })
 
-router.get("/bookmarks/:userId", async (req, res) => {
+router.get("/bookmarks/:userId/:loadDetails", async (req, res) => {
   let userId = req.params.userId;
-  let bookmarks = await User
+  let loadDetails = req.params.loadDetails;
+
+  let bookmarks;
+
+  if(loadDetails == "true"){
+    bookmarks = await User
     .findOne({ _id: ObjectId(userId)})
     .select("-Email -Password -_id")
-    // .populate("Bookmarks")
+    .populate("Bookmarks")
+  }
+  else{
+    bookmarks = await User
+    .findOne({ _id: ObjectId(userId)})
+    .select("-Email -Password -_id")
+  }
 
   if(bookmarks.err) throw bookmarks.err;
   else {

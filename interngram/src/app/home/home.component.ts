@@ -26,7 +26,7 @@ export class HomeComponent implements OnInit {
 
   posts = [];
 
-  collapsed = false;
+  collapsed = true;
 
   index = 0;
 
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
     }
     console.log(this.user);
 
-    this.bookmarkService.loadBookmarks(this.user._id).subscribe((data) => {
+    this.bookmarkService.loadBookmarks(this.user._id, false).subscribe((data) => {
       this.user.Bookmarks = data["bookmarks"];
       console.log(data["bookmarks"]);
       console.log(this.user);

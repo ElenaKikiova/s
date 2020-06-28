@@ -1,31 +1,30 @@
 <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+  <a class="nav-link" href="/">
     <span class="navbar-brand">InternGram</span>
-    <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-  
-    <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item" ngbDropdown>
-          <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button">
-            Add
-          </a>
-          <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
-            <div ngbDropdownItem href="#" (click)="addPost('IMAGE')">Image</div>
-            <div ngbDropdownItem href="#" (click)="addPost('VIDEO')">Video</div>
-            <div ngbDropdownItem href="#" (click)="addPost('LINK')">Link</div>
-          </div>
-        </li>
-      </ul>
-    </div>
+  </a>
+  <button class="navbar-toggler" type="button" aria-controls="navbarContent" [attr.aria-expanded]="!collapsed" aria-label="Toggle navigation" (click)="collapsed = !collapsed">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
+  <div class="navbar-collapse" [class.collapse]="collapsed" id="navbarContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item" ngbDropdown>
+        <a class="nav-link" style="cursor: pointer" ngbDropdownToggle id="navbarDropdown1" role="button">
+          Add
+        </a>
+        <div ngbDropdownMenu aria-labelledby="navbarDropdown1" class="dropdown-menu">
+          <div ngbDropdownItem href="#" (click)="addPost('IMAGE')">Image</div>
+          <div ngbDropdownItem href="#" (click)="addPost('VIDEO')">Video</div>
+          <div ngbDropdownItem href="#" (click)="addPost('LINK')">Link</div>
+        </div>
+      </li>
+    </ul>
     <a href="/profile">
       <div class="text-light mx-2"> {{user.Email}} </div>
     </a>
     <div class="text-light mx-2" style="cursor: pointer;" (click)="logOut()">Log Out</div>
+  </div>
+    
 </nav>
 
 
