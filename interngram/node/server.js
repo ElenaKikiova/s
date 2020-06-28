@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
+var multer = require('multer');
+var fs = require('fs');
 const ObjectId = require('mongodb').ObjectID;
 
 const dbConnection = require('./dbConnection');
@@ -12,6 +14,38 @@ app.use(express.json());
 app.set('view engine', 'ejs');
 
 app.use(cors());
+
+const DIR = '../src/assets/avatars';
+
+// SET STORAGE
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, DIR)
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.fieldname + ".jpg")
+  }
+})
+ 
+var upload = multer({ storage: storage })
+
+
+app.post('/uploadAvatar', upload.any('avatar'), function (req, res, next) {
+  // req.file is the `avatar` file
+  // req.body will hold the text fields, if there were any
+
+  const file = req.files[0]
+  if (!file) {
+    const error = new Error('Please upload a file')
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  // var img = fs.readFileSync(req.file.path);
+  // var encode_image = img.toString('base64');
+  // res.send(file)
+
+  console.log(file);
+})
 
 // -------------------ROUTES--------------------- //
 

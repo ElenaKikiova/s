@@ -72,4 +72,69 @@ router.post("/login", async (req, res) => {
 
 })
 
+// router.post("/uploadAvatar", async (req, res) => {
+
+//   console.log(req.body);
+
+//   const form = new formidable.IncomingForm(); 
+//   form.parse(req, function(err, fields, files){ 
+
+//     console.log(files);
+
+//       // var oldPath = files.profilePic.path; 
+//       // var newPath = path.join(__dirname, 'uploads') 
+//       //         + '/' + files.profilePic.name 
+//       // var rawData = fs.readFileSync(oldPath) 
+    
+//       // fs.writeFile(newPath, rawData, function(err){ 
+//       //     if(err) console.log(err) 
+//       //     return res.send("Successfully uploaded") 
+//       // }) 
+
+//       res.send();
+//   }) 
+
+// })
+
+// let storage = multer.diskStorage({
+//   destination: (req, file, cb) => {
+//     cb(null, PATH);
+//   },
+//   filename: (req, file, cb) => {
+//     cb(null, file.fieldname)
+//   }
+// });
+
+// let upload = multer({
+//   storage: storage
+// });
+
+
+
+// const DIR = '../src/assets/avatars';
+// var upload = multer({dest: DIR});
+
+// router.post("/uploadAvatar", upload.single('image'), function (req, res) {
+//   // if (!req.file) {
+//   //   console.log("No file is available!");
+//   //   return res.send({
+//   //     success: false
+//   //   });
+
+//   // } else {
+//   //   console.log('File is available!');
+//   //   return res.send({
+//   //     success: true
+//   //   })
+//   // }
+
+//   upload(req, res, function (err) {
+//     if (err) {
+//       return res.end(err.toString());
+//     }
+ 
+//     res.end('File is uploaded');
+//   });
+// });
+
 module.exports = router;

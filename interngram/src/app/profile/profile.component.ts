@@ -3,6 +3,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { FileUploader } from 'ng2-file-upload';
+
 import { ComponentsModule } from '../components/components.module';
 
 import { Router } from '@angular/router';
@@ -12,6 +14,8 @@ import { BookmarkService } from '../services/bookmark.service';
 import { CommentsModalComponent } from '../components/comments-modal/comments-modal.component';
 import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add-edit-post-modal.component';
 import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
+import { AuthService } from '../services/auth.service';
+import { ConnectToServerService } from '../services/connect-to-server.service';
 
 @Component({
   selector: 'app-profile',
@@ -22,7 +26,11 @@ export class ProfileComponent implements OnInit {
 
   public user;
 
+  public avatar;
+
   collapsed = true;
+
+  uploader: FileUploader;
 
   ngOnInit(): void {
 
@@ -43,15 +51,32 @@ export class ProfileComponent implements OnInit {
       console.log(this.user);
     })
 
+    this.uploader = new FileUploader({
+      url: this.connectToServerService.serverUrl + "/uploadAvatar",
+      itemAlias: this.user._id
+    });
+  
+     
+    this.uploader.onAfterAddingFile = (file) => {
+      file.withCredentials = false;
+    };
+    this.uploader.onCompleteItem = (item: any, status: any) => {
+      console.log('Uploaded File Details:', item);
+    };
   }
+
 
 
   constructor(
     private modalService: NgbModal,
     public router: Router,
     private postService: PostService,
-    private bookmarkService: BookmarkService
+    private authService: AuthService,
+    private bookmarkService: BookmarkService,
+    private connectToServerService: ConnectToServerService
   ){
+
+    
   }
 
   async removeBookmark(post){
@@ -69,6 +94,20 @@ export class ProfileComponent implements OnInit {
     })
 
   }
+
+  // async selectedFile(event) {
+  //   this.avatar = event.target.files[0];
+  // }
+
+  // async onUpload(){
+  //   const uploadData = new FormData();
+  //   uploadData.append('myFile', this.avatar, this.avatar.name);
+
+  //   this.authService.uploadAvatar(uploadData).subscribe((data) => {
+  //     console.log(data);
+  //   });
+  // }
+
 
   
   async logOut(){

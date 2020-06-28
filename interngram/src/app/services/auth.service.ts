@@ -31,4 +31,11 @@ export class AuthService {
     )
   }
 
+  public uploadAvatar(uploadData){
+    console.log(uploadData);
+    return this.http.post(this.connectToServerService.serverUrl + '/uploadAvatar',
+      uploadData
+    );
+  }
+
 }

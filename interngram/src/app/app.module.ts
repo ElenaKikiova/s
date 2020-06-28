@@ -24,6 +24,7 @@ import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
 import { BookmarkService } from './services/bookmark.service';
 import { ComponentsModule } from './components/components.module';
+import { FileUploadModule } from "ng2-file-upload";   //Should import HERE
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { ComponentsModule } from './components/components.module';
     HttpClientModule,
     BrowserAnimationsModule,
     StorageServiceModule,
-    ComponentsModule
+    ComponentsModule,
+    FileUploadModule
   ],
   providers: [
     ConnectToServerService,
