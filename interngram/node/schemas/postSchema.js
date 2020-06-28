@@ -11,7 +11,8 @@ const PostSchema = mongoose.Schema({
     url: String,
     alt: String
   },
-  date: String
+  date: String,
+  likes: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User'}]
 },
   { collection: "posts"}
 );

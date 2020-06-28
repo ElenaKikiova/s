@@ -46,12 +46,14 @@ export class HomeComponent implements OnInit {
       "type": '',
       "title": '',
       "date": null,
+      "likes": [],
       "meta": {
         "url": '',
         "alt": ''
       }
     };
   }
+
 
   constructor(
     private modalService: NgbModal,
@@ -68,12 +70,14 @@ export class HomeComponent implements OnInit {
       "type": '',
       "title": '',
       "date": '',
+      "likes": [],
       "meta": {
         "url": '',
         "alt": ''
       }
     }
   }
+
 
 
   async addPost(type) {
@@ -158,6 +162,19 @@ export class HomeComponent implements OnInit {
       }
     })
     
+  }
+
+  async like(post){
+    post.likes.push(this.user._id);
+
+    this.postService.updateLikes(post).subscribe((data) => {
+      console.log(data);
+    })
+  }
+
+  async unlike(post){
+    let index = post.likes.indexOf(this.user._id);
+    post.likes.splice(index, 1);
   }
 
   async showComments(post){

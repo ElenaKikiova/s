@@ -57,11 +57,6 @@ router.post("/addComment", async (req, res) => {
 
 router.post("/deleteComment", async (req, res) => {
   let commentId = req.body.commentId;
-  console.log("delete");
-  console.log(commentId);
-  // let addComment = new Comment(comment);
-
-  // addComment.save();
 
   let deleteComment = await Comment.findByIdAndDelete({ _id: ObjectId(commentId)} );
   if(deleteComment.err) throw deleteComment.err;
@@ -74,7 +69,6 @@ router.post("/deleteComment", async (req, res) => {
 router.post("/savePost", async (req, res) => {
 
   let post = req.body.data;
-  console.log(post);
   let upsertPost = await Post.updateOne(
     { _id: ObjectId(post._id) }, 
     {
@@ -106,5 +100,24 @@ router.post("/deletePost", async (req, res) => {
   else res.send();
 
 });
+
+router.post("/updateLikes", async (req, res) => {
+
+  let post = req.body.post;
+  console.log(post);
+  let updateLikes = await Post.updateOne(
+    { _id: ObjectId(post._id) }, 
+    {
+    $set: {
+      likes: post.likes
+    }
+  });
+
+  if(updateLikes.err) throw updateLikes.err;
+  else {
+    res.send();
+  }
+
+})
 
 module.exports = router;

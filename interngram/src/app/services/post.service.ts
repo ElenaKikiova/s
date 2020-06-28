@@ -44,4 +44,10 @@ export class PostService {
     )
   }
 
+  public updateLikes(post){
+    return this.http.post(this.connectToServerService.serverUrl + '/updateLikes',
+    {post: post}
+    )
+  }
+
 }

@@ -47,7 +47,6 @@ export class CommentsModalComponent implements OnInit {
     commentForDb.userId = this.newComment.userId._id;
 
     this.postService.addComment(commentForDb).subscribe((data) => {
-      console.log(data);
       this.newComment.comment = "";
     })
     
@@ -56,20 +55,11 @@ export class CommentsModalComponent implements OnInit {
   
 
   async deleteComment(commentId){
-    console.log(commentId);
-
-    // this.comments.unshift(JSON.parse(JSON.stringify(this.newComment)));
-
-    // let commentForDb = JSON.parse(JSON.stringify(this.newComment));
-    // commentForDb.userId = this.newComment.userId._id;
 
     this.postService.deleteComment(commentId).subscribe((data) => {
-      console.log(data);
 
       if(data == null){
-        
         let commentIndex = this.comments.findIndex((c) => c._id == commentId);
-        console.log(commentIndex);
         this.comments.splice(commentIndex, 1);
       }
     })
