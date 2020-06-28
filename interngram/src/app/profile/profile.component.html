@@ -33,14 +33,25 @@
 
               <div
                 *ngFor="let post of user.Bookmarks"
-                class="col col-sm-6 col-md-4 col-lg-3">
+                class="card col col-sm-6 col-md-4">
 
                 <div class="card-body">
 
                   <div class="d-flex mb-2">
                     <div>
-                      <h3 class="card-title">{{post.title}}</h3>
+                      <h4 class="card-title">{{post.title}}</h4>
                     </div>
+
+                    <button
+                      class="btn d-block ml-auto "
+                      (click)="removeBookmark(post)">
+
+                      <svg
+                        style="color: red"
+                        width="1.5em" height="1.5em" viewBox="0 0 16 16" class="bi bi-bookmark-fill" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                          <path fill-rule="evenodd" d="M3 3a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v12l-5-3-5 3V3z"/>
+                      </svg>
+                    </button>
         
                   </div>
         

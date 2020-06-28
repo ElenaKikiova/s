@@ -54,6 +54,22 @@ export class ProfileComponent implements OnInit {
   ){
   }
 
+  async removeBookmark(post){
+
+    let index = this.user.Bookmarks.indexOf(post);
+    console.log(index);
+
+    this.user.Bookmarks.splice(index, 1);
+
+    this.bookmarkService.updateBookmarks({
+      "_id": this.user._id, 
+      "Bookmarks": this.user.Bookmarks
+    }).subscribe((data) => {
+      console.log(data);
+    })
+
+  }
+
   
   async logOut(){
     localStorage.clear();
