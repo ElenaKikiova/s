@@ -44,23 +44,31 @@ router.get("/comments/:postId", async (req, res) => {
 router.post("/addComment", async (req, res) => {
 
   let comment = req.body.data;
-  console.log(comment);
   let addComment = new Comment(comment);
 
   addComment.save();
 
-  res.send();
+  if(addComment.err) throw addComment.err;
+  else {
+    res.send();
+  }
 
 });
 
 router.post("/deleteComment", async (req, res) => {
-  // let comment = req.body.data;
-  // console.log(comment);
+  let commentId = req.body.commentId;
+  console.log("delete");
+  console.log(commentId);
   // let addComment = new Comment(comment);
 
   // addComment.save();
 
-  res.send();
+  let deleteComment = await Comment.findByIdAndDelete({ _id: ObjectId(commentId)} );
+  if(deleteComment.err) throw deleteComment.err;
+  else {
+    res.send();
+  }
+
 })
   
 router.post("/savePost", async (req, res) => {

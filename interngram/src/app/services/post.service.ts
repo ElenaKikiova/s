@@ -26,9 +26,9 @@ export class PostService {
     )
   }
 
-  public deleteComment(data){
+  public deleteComment(commentId){
     return this.http.post(this.connectToServerService.serverUrl + '/deleteComment',
-      { data } 
+      { commentId } 
     )
   }
   
