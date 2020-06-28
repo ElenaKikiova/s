@@ -20,6 +20,7 @@ import { StorageServiceModule } from 'ngx-webstorage-service';
 import { ConnectToServerService } from './services/connect-to-server.service';
 import { AuthService } from './services/auth.service';
 import { PostService } from './services/post.service';
+import { BookmarkService } from './services/bookmark.service';
 import { ComponentsModule } from './components/components.module';
 
 @NgModule({
@@ -45,7 +46,8 @@ import { ComponentsModule } from './components/components.module';
   providers: [
     ConnectToServerService,
     AuthService,
-    PostService
+    PostService,
+    BookmarkService
   ],
   bootstrap: [AppComponent]
 })

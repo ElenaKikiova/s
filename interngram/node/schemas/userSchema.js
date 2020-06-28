@@ -10,6 +10,7 @@ const saltRounds = 10;
 const UserSchema = mongoose.Schema({
   Email: String,
   Password: String,
+  Bookmarks: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Post'}]
 },
   { collection: "users" }
 );

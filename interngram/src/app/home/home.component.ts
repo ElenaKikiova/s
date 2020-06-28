@@ -7,6 +7,8 @@ import { ComponentsModule } from '../components/components.module';
 
 import { Router } from '@angular/router';
 import { PostService } from '../services/post.service';
+import { BookmarkService } from '../services/bookmark.service';
+
 import { CommentsModalComponent } from '../components/comments-modal/comments-modal.component';
 import { AddEditPostModalComponent } from '../components/add-edit-post-modal/add-edit-post-modal.component';
 import { DeletePostModalComponent } from '../components/delete-post-modal/delete-post-modal.component';
@@ -36,9 +38,16 @@ export class HomeComponent implements OnInit {
 
     this.user = {
       _id: localStorage.getItem("userId"),
-      Email: localStorage.getItem("userEmail")
+      Email: localStorage.getItem("userEmail"),
+      Bookmarks: []
     }
     console.log(this.user);
+
+    this.bookmarkService.loadBookmarks(this.user._id).subscribe((data) => {
+      this.user.Bookmarks = data["bookmarks"];
+      console.log(data["bookmarks"]);
+      console.log(this.user);
+    })
 
     this.post = {
       "_id": null,
@@ -58,7 +67,8 @@ export class HomeComponent implements OnInit {
   constructor(
     private modalService: NgbModal,
     public router: Router,
-    private postService: PostService
+    private postService: PostService,
+    private bookmarkService: BookmarkService
   ){
     this.loadPosts();
   }
@@ -165,17 +175,38 @@ export class HomeComponent implements OnInit {
   }
 
   async like(post){
-    post.likes.push(this.user._id);
+    let index = post.likes.indexOf(this.user._id);
+
+    if(index < 0){
+      post.likes.push(this.user._id);
+    }
+    else{
+      post.likes.splice(index, 1);
+    }
 
     this.postService.updateLikes(post).subscribe((data) => {
       console.log(data);
     })
   }
 
-  async unlike(post){
-    let index = post.likes.indexOf(this.user._id);
-    post.likes.splice(index, 1);
+  async bookmark(post){
+    let index = this.user.Bookmarks.indexOf(post._id);
+
+    if(index < 0){
+      this.user.Bookmarks.push(post._id);
+    }
+    else{
+      this.user.Bookmarks.splice(index, 1);
+    }
+
+    this.bookmarkService.updateBookmarks({
+      "_id": this.user._id, 
+      "Bookmarks": this.user.Bookmarks
+    }).subscribe((data) => {
+      console.log(data);
+    })
   }
+
 
   async showComments(post){
 

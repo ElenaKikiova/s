@@ -3,7 +3,7 @@ let express = require('express');
 let router = express.Router();
 const ObjectId = require('mongodb').ObjectID;
 
-
+const User = require('../schemas/userSchema');
 const Post = require('../schemas/postSchema');
 const Comment = require('../schemas/commentSchema');
 
@@ -114,6 +114,38 @@ router.post("/updateLikes", async (req, res) => {
   });
 
   if(updateLikes.err) throw updateLikes.err;
+  else {
+    res.send();
+  }
+
+})
+
+router.get("/bookmarks/:userId", async (req, res) => {
+  let userId = req.params.userId;
+  let bookmarks = await User
+    .findOne({ _id: ObjectId(userId)})
+    .select("-Email -Password -_id")
+    // .populate("Bookmarks")
+
+  if(bookmarks.err) throw bookmarks.err;
+  else {
+    res.send({bookmarks: bookmarks.Bookmarks})
+  }
+})
+
+router.post("/updateBookmarks", async (req, res) => {
+
+  let user = req.body.user;
+  console.log(user);
+  let updateBookmarks = await User.updateOne(
+    { _id: ObjectId(user._id) }, 
+    {
+    $set: {
+      Bookmarks: user.Bookmarks
+    }
+  });
+
+  if(updateBookmarks.err) throw updateBookmarks.err;
   else {
     res.send();
   }
